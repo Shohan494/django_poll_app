@@ -1,0 +1,22 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        {% comment %}
+        hard coding pattern
+        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+        using the url template tag pattern
+        <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
+        {% endcomment %}
+
+        {# using the app namespace pattern #}
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
